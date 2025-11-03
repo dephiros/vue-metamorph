@@ -2,7 +2,7 @@ import postcss from 'postcss';
 import postcssLess from 'postcss-less';
 import postcssSass from 'postcss-sass';
 import postcssScss from 'postcss-scss';
-import postcssStyl from 'postcss-styl';
+// import postcssStyl from 'postcss-styl'; // Removed to avoid Deno compatibility issues
 import * as AST from '../ast';
 
 export const syntaxMap: Record<string, typeof postcssScss> = {
@@ -10,7 +10,7 @@ export const syntaxMap: Record<string, typeof postcssScss> = {
   scss: postcssScss,
   less: postcssLess,
   sass: postcssSass,
-  stylus: postcssStyl,
+  // stylus: postcssStyl, // Removed - Stylus causes stack overflow in Deno
 };
 
 export const isSupportedLang = (str: string) => !!syntaxMap[str];
@@ -22,7 +22,7 @@ export const getCssDialectForFilename = (filename: string) => {
     case filename.endsWith('.sass'): return 'sass';
     case filename.endsWith('.less'): return 'less';
     case filename.endsWith('.css'): return 'css';
-    case filename.endsWith('.styl'): return 'stylus';
+    // case filename.endsWith('.styl'): return 'stylus'; // Removed - Stylus not supported
     default: return null;
   }
 };
